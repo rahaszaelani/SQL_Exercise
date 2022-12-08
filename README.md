@@ -14,8 +14,13 @@ Here's the objectives.
 4. Salah satu tantangan bisnis yang sedang dihadapi oleh RakaFood adalah untuk  meningkatkan transaksi menggunakan digital payment (cahsless). Kira-kira dari data  yang kita miliki, data apa yang dapat membantu business problem tersebut? Sediakan  suatu query untuk bisa membantu tim-tim terkait dari RakaFood untuk bisa menjawab  tantangan bisnis tersebut, kemudian jelaskan mengapa menurut Anda data hasil dari  query Anda itu bisa membantu menyelesaikan business problem tersebut, yaitu untuk  meningkatkan digital payment di transaksi RakaFood.
 
 5. Tim customer experience (CX) ingin mengoptimalkan penggunaan dompet digital dan  membuat program membership untuk meningkatkan loyalitas pelanggan. Membership ini  berbasis poin, setiap poin diperoleh dari total belanja minimal 1000 menggunakan dompet  digital. Adapun kategori membership berbasis poin, adalah sebagai berikut:
+
 a.Total poin kurang dari 10 adalah non member
+
 b.Total poin 10 - 100 adalah bronze member
+
 c.Total poin 100 - 300 adalah silver member
+
 d.Total poin lebih dari 300 adalah gold member
+
 Tim CX membutuhkan data jumlah pelanggan di setiap kota berdasarkan kategori  membershipnya. 
