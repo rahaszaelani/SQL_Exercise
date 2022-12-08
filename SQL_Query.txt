@@ -1,0 +1,61 @@
+SQL Query 
+
+-- Answer no 1
+
+select alamat, kota, count (id_order) as jumlah_order
+from rakamin_customer as rc
+left join rakamin_customer_address as rca on rca.id_pelanggan=rc.id_pelanggan
+left join rakamin_order as ro on ro.id_pelanggan=rc.id_pelanggan
+where  (rca.kota != 'Depok') and (ro.id_merchant = 5) 
+group by 1,2
+order by 3 DESC ;
+
+-- Answer no 2
+
+select rc.id_pelanggan, telepon,metode_bayar,(kuantitas * harga) as total_payment_value
+from rakamin_customer as rc
+right join rakamin_order as ro on ro.id_pelanggan=rc.id_pelanggan
+where (email like '%yahoo.com') and (penipu = 0) 
+group by 1,2,3,4
+order by 4 desc
+;
+-- Answer no 3
+
+select rc.nama, rc.email, rc.telepon, rca.alamat, ro.metode_bayar, count (ro.kuantitas) as total_order
+from rakamin_customer as rc
+join rakamin_customer_address as rca on rc.id_pelanggan=rca.id_pelanggan
+left join rakamin_order as ro on ro.id_pelanggan=rc.id_pelanggan
+	where (rc.penipu = 0) and (rc.konfirmasi_telepon <> 0) and (rc.pengguna_aktif = 1 ) and (ro.metode_bayar = 'cash')
+group by 1,2,3,4,5
+
+-- Answer no 4
+
+select rc.nama, rc.email, rca.alamat,count (ro.kuantitas) as jumlah_pesanan, ro.metode_bayar
+from rakamin_customer as rc
+join rakamin_customer_address as rca on rc.id_pelanggan=rca.id_pelanggan
+left join rakamin_order as ro on ro.id_pelanggan=rc.id_pelanggan
+	where (rc.penipu = 0) and (rc.konfirmasi_telepon <> 0 ) and (rc.pengguna_aktif = 1 )  and (ro.metode_bayar = 'cash')
+group by 1,2,3,5
+order by 4 DESC
+
+note : Dengan mengetahui siapa saja customer yang masih melakukan pembayaran dengan cash kita dpat memberikan promosi agar mereka mau mencoba beralih ke digital payment.
+
+-- Answer no 5
+
+select  rca.kota, 
+        count (distinct rca.id_pelanggan) as jumlah_pelanggan, 
+        customer_loyalty
+from 
+(
+(select id_pelanggan,harga*kuantitas as total_belanja,harga*kuantitas/1000 as poin,
+case when harga*kuantitas/1000 < 10 then 'non'
+     when harga*kuantitas/1000 between 10 and 100 then 'bronze_member'
+	 when harga*kuantitas/1000 between 100 and 300 then 'silver_member'
+	 when harga*kuantitas/1000 > 300 then 'gold_member'
+	 end as customer_loyalty
+	 from rakamin_order 
+	 where metode_bayar <> 'cash') as ro
+	 left join rakamin_customer_address as rca on rca.id_pelanggan=ro.id_pelanggan
+	 ) 
+	 group by 1,3
+	 ;
